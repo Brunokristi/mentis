@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Mulish:wght@400;700&display=swap");
+@import "tailwindcss";
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+@theme {
+  --color-baige: #fbf9f3;
+  --color-green: #335940;
+
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Mulish", Arial, sans-serif;
+}
+
+:root {
+  --cream: #fbf9f3;
+  --text-dark: #335940;
+
+  --font-heading:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  --font-body:
+    "Mulish",
+    Arial,
+    sans-serif;
+
+  --shadow-soft:
+    0 14px 30px rgba(31, 55, 43, 0.14),
+    0 3px 8px rgba(31, 55, 43, 0.1);
+
+  --shadow-mid:
+    0 24px 44px rgba(31, 55, 43, 0.2),
+    0 8px 20px rgba(31, 55, 43, 0.14);
+
+  --shadow-strong:
+    0 -10px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html[data-humanitas-transition] {
+  overflow-anchor: none;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text-dark);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+:focus,
+:focus-visible {
+  outline: none !important;
+}
+
+/*
+ * Typography
+ *
+ * Figma styles:
+ * Heading      — Cormorant Garamond Bold, 20px, Auto
+ * Text bold    — Mulish Bold, 20px, Auto
+ * Text regular — Mulish Regular, 20px, Auto
+ */
+
+.heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
+.text-regular {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
+.subtle-grid {
+  background:
+    radial-gradient(circle at 12% 18%,
+      rgba(49, 95, 70, 0.1),
+      transparent 34%),
+    radial-gradient(circle at 84% 82%,
+      rgba(49, 95, 70, 0.08),
+      transparent 38%),
+    repeating-linear-gradient(0deg,
+      rgba(49, 95, 70, 0.025),
+      rgba(49, 95, 70, 0.025) 1px,
+      transparent 1px,
+      transparent 14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.scroll-motion {
+  --scroll-x: 0px;
+  --scroll-y: 0px;
+  --scroll-rotate: 0deg;
+  --scroll-scale: 1;
+
+  transform:
+    translate3d(var(--scroll-x),
+      var(--scroll-y),
+      0) rotate(var(--scroll-rotate)) scale(var(--scroll-scale));
+
+  transform-origin:
+    center center;
+
+  backface-visibility:
+    hidden;
+
+  will-change:
+    transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-motion {
+    --scroll-x: 0px !important;
+    --scroll-y: 0px !important;
+    --scroll-scale: 1 !important;
+  }
+}
