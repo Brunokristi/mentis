@@ -40,7 +40,7 @@ const displayedBranchName = computed(() => {
         company.value?.name ??
         company.value?.legalName ??
         company.value?.legal_name ??
-        'Humanitas'
+        'Mentis'
     );
 });
 
@@ -49,7 +49,7 @@ const displayedCompanyName = computed(() => {
         company.value?.legalName ??
         company.value?.legal_name ??
         company.value?.name ??
-        'Humanitas'
+        'Mentis'
     );
 });
 
@@ -203,7 +203,7 @@ const ambulances = [
         href: 'https://klinickapsychologialucenec.sk'
     },
     {
-        name: 'Humanitas',
+        name: 'Mentis',
         logo: '/images/humanitas_logo_horizontalne.svg',
         href: 'https://klinickapsychologiars.sk'
     }
@@ -337,31 +337,32 @@ function handleCookiesClick() {
         "
     >
         <img
-            src="/images/humanitas_mamadieta_zelena.svg"
+            src="/images/mentis_ruky.svg"
             alt=""
             aria-hidden="true"
             draggable="false"
             class="
+                -scale-x-100
+                rotate-[10deg]
                 pointer-events-none
                 absolute
-                bottom-[-4rem]
-                right-[-8rem]
+                bottom-[-5rem]
+                right-[-5rem]
                 z-0
                 h-auto
                 max-h-[50rem]
                 max-w-none
                 opacity-[0.2]
 
-                sm:bottom-[-9rem]
+                sm:bottom-[-1rem]
                 sm:w-[60%]
 
-                md:bottom-[-15rem]
-                md:right-[-15rem]
+                md:bottom-[-10rem]
+                md:right-[-5rem]
                 md:w-[40rem]
 
-                lg:bottom-[-10rem]
+                lg:bottom-[-15rem]
 
-                xl:right-[-15rem]
             "
         >
 

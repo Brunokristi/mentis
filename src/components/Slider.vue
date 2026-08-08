@@ -57,7 +57,7 @@ const props = defineProps({
 
     backgroundImage: {
         type: String,
-        default: '/images/humanitas_pozadie.png'
+        default: '/images/mentis_pozadie.png'
     },
 
     backgroundColor: {

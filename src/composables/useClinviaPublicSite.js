@@ -13,7 +13,7 @@ export function useClinviaPublicSite() {
     } = storeToRefs(publicSiteStore)
 
     const logoFallbackFailed = ref(false)
-    const fallbackLogoUrl = '/images/humanitas_logo.png'
+    const fallbackLogoUrl = '/images/mentis_logo.png'
 
     const data = computed(() => {
         return footerData.value ?? null

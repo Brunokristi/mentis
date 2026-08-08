@@ -23,7 +23,7 @@ const displayedName = computed(() => {
         company.value?.name ??
         company.value?.legalName ??
         company.value?.legal_name ??
-        'Humanitas'
+        'Mentis'
     );
 });
 
@@ -35,7 +35,7 @@ const displayedLogo = computed(() => {
         company.value?.logo_url;
 
     if (!path) {
-        return '/images/humanitas_logo.svg';
+        return '/images/mentis_logo.svg';
     }
 
     if (

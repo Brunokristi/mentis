@@ -1019,7 +1019,7 @@ function setLoaderState(state) {
     svgRoot.setAttribute(
         'aria-label',
         nextState === 'loading'
-            ? 'Humanitas loading'
+            ? 'Mentis loading'
             : nextState === 'success'
                 ? 'Completed successfully'
                 : 'An error occurred'
@@ -1638,7 +1638,7 @@ onUnmounted(() => {
                             rounded-full
                             border
                             border-baige/5
-                            bg-green
+                            bg-green/90
                             p-2
                             shadow-[var(--shadow-mid)]
                             [scrollbar-width:none]
@@ -1724,9 +1724,9 @@ onUnmounted(() => {
                             rounded-full
                             border
                             border-baige/5
-                            bg-green
+                            bg-green/90
                             p-2
-                            shadow-[var(--shadow-strong)]
+                            shadow-[var(--shadow-mid)]
 
                             sm:flex
                         "
@@ -1827,9 +1827,9 @@ onUnmounted(() => {
                     >
                         <object
                             ref="loaderObject"
-                            data="/humanitas_loader_states.svg"
+                            data="/mentis_loader_states.svg"
                             type="image/svg+xml"
-                            aria-label="Humanitas"
+                            aria-label="Mentis"
                             class="
                                 h-auto
                                 w-[clamp(10rem,28vw,18rem)]
@@ -1837,7 +1837,7 @@ onUnmounted(() => {
                             "
                             @load="handleLoaderReady"
                         >
-                            Humanitas
+                            Mentis
                         </object>
                     </div>
 

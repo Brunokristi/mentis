@@ -6,17 +6,17 @@
     height="220"
     viewBox="0 0 220 220"
     role="img"
-    aria-label="Humanitas loader"
+    aria-label="Mentis loader"
 >
-    <title>Humanitas loader</title>
+    <title>Mentis loader</title>
 
     <defs>
         <!--
-            Smaller orbit radius keeps the HUMANITAS text
+            Smaller orbit radius keeps the MENTIS text
             closer to the centre logo.
         -->
         <path
-            id="humanitasOrbit"
+            id="mentisOrbit"
             d="
                 M 110 62
                 A 48 48 0 1 1 110 158
@@ -32,7 +32,7 @@
         );
 
         .word {
-            fill: #335940;
+            fill: #B86C63;
             font-family:
                 "Cormorant Garamond",
                 "Times New Roman",
@@ -45,7 +45,7 @@
 
     <!-- Centre logo -->
     <image
-        href="humanitas_logo.svg"
+        href="humanits_logo.svg"
         x="45"
         y="45"
         width="130"
@@ -63,11 +63,11 @@
             text-anchor="middle"
         >
             <textPath
-                href="#humanitasOrbit"
-                xlink:href="#humanitasOrbit"
+                href="#mentisOrbit"
+                xlink:href="#mentisOrbit"
                 startOffset="50%"
             >
-                HUMANITAS
+                MENTIS
             </textPath>
         </text>
     </g>

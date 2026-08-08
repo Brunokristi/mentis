@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://klinickapsychologiars.sk/sitemap.xml
+Sitemap: https://klinickapsychologialucenec.sk/sitemap.xml

@@ -2,7 +2,7 @@ import { computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePublicSiteStore } from '../stores/publicSite';
 
-export function usePublicSiteData(branchSlug = 'humanitas') {
+export function usePublicSiteData(branchSlug = 'mentis') {
     const publicSiteStore = usePublicSiteStore();
     const {
         company,

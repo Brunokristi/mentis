@@ -262,15 +262,15 @@ function buildSitemapXml(dynamicServicePaths, dynamicEmployeePaths) {
 
 const sharedText = {
     home: {
-        heading: 'Klinický psychológ Rimavská Sobota',
-        body: 'Humanitas ponúka odbornú psychologickú starostlivosť, prehľad služieb a možnosť objednania priamo cez web.'
+        heading: 'Klinický psychológ Lučenec',
+        body: 'Mentis ponúka odbornú psychologickú starostlivosť, prehľad služieb a možnosť objednania priamo cez web.'
     },
     services: {
         heading: 'Psychologické služby',
-        body: 'Prehľad odborných psychologických služieb ambulancie Humanitas. Detailný zoznam služieb je dostupný v aplikácii po načítaní stránky.'
+        body: 'Prehľad odborných psychologických služieb ambulancie Mentis. Detailný zoznam služieb je dostupný v aplikácii po načítaní stránky.'
     },
     contact: {
-        heading: 'Kontaktujte Humanitas',
+        heading: 'Kontaktujte Mentis',
         body: 'Napíšte nám cez kontaktný formulár alebo si pozrite kontaktné údaje a ordinačné hodiny v plnej aplikácii.'
     }
 }
@@ -287,9 +287,9 @@ function buildStaticBody(routeKey) {
     if (routeKey === 'domov') {
         return `
             <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
-                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Humanitas</p>
-                <h1 style="font-size:clamp(2.4rem,5vw,4.8rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Klinický psychológ Rimavská Sobota</h1>
-                <p style="font-size:1.08rem;line-height:1.75;max-width:60ch;margin:0 0 28px;">Humanitas ponúka odbornú psychologickú starostlivosť, prehľad služieb a možnosť objednania priamo cez web.</p>
+                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
+                <h1 style="font-size:clamp(2.4rem,5vw,4.8rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Klinický psychológ Lučenec</h1>
+                <p style="font-size:1.08rem;line-height:1.75;max-width:60ch;margin:0 0 28px;">Mentis ponúka odbornú psychologickú starostlivosť, prehľad služieb a možnosť objednania priamo cez web.</p>
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
                     <a href="/sluzby" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#335940;color:#fbf9f3;text-decoration:none;">Pozrieť služby</a>
                     <a href="/kontakt" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#fbf9f3;color:#335940;text-decoration:none;border:1px solid #c9d3c3;">Kontakt</a>
@@ -301,9 +301,9 @@ function buildStaticBody(routeKey) {
     if (routeKey === 'services') {
         return `
             <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
-                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Humanitas</p>
+                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
                 <h1 style="font-size:clamp(2.1rem,5vw,4.2rem);line-height:.95;margin:0 0 20px;max-width:14ch;">Psychologické služby</h1>
-                <p style="font-size:1.08rem;line-height:1.75;max-width:64ch;margin:0;">Prehľad odborných psychologických služieb ambulancie Humanitas. Detailný zoznam služieb je dostupný v aplikácii po načítaní stránky.</p>
+                <p style="font-size:1.08rem;line-height:1.75;max-width:64ch;margin:0;">Prehľad odborných psychologických služieb ambulancie Mentis. Detailný zoznam služieb je dostupný v aplikácii po načítaní stránky.</p>
             </main>
         `
     }
@@ -311,8 +311,8 @@ function buildStaticBody(routeKey) {
     if (routeKey === 'contact') {
         return `
             <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
-                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Humanitas</p>
-                <h1 style="font-size:clamp(2.1rem,5vw,4.2rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Kontaktujte Humanitas</h1>
+                <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
+                <h1 style="font-size:clamp(2.1rem,5vw,4.2rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Kontaktujte Mentis</h1>
                 <p style="font-size:1.08rem;line-height:1.75;max-width:64ch;margin:0;">Napíšte nám cez kontaktný formulár alebo si pozrite kontaktné údaje a ordinačné hodiny v plnej aplikácii.</p>
             </main>
         `
@@ -406,7 +406,7 @@ async function renderRoute(templateHtml, routeKey, fileName, seoConfig) {
     const prerenderedBody = buildStaticBody(routeKey)
 
     const withLang = templateHtml.replace('<html lang="en">', '<html lang="sk">')
-    const withTitle = withLang.replace('<title>HUMANITAS</title>', `<title>${escapeHtml(seoConfig.title)}</title>`)
+    const withTitle = withLang.replace('<title>MENTIS</title>', `<title>${escapeHtml(seoConfig.title)}</title>`)
     const withHead = withTitle.replace(
         '</head>',
         `
@@ -450,8 +450,8 @@ async function main() {
     await renderRoute(templateHtml, 'contact', 'kontakt', PAGE_SEO.contact)
     await renderRoute(templateHtml, 'domov-redirect', 'domov', {
         path: '/domov',
-        title: 'Domov – Humanitas',
-        description: 'Presmerovanie na hlavnú stránku Humanitas.'
+        title: 'Domov – Mentis',
+        description: 'Presmerovanie na hlavnú stránku Mentis.'
     })
 
     const sitemapXml = buildSitemapXml(dynamicServicePaths, dynamicEmployeePaths)

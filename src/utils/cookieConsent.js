@@ -1,5 +1,5 @@
 export const COOKIE_CONSENT_STORAGE_KEY =
-    'humanitas-cookie-consent';
+    'mentis-cookie-consent';
 
 export const COOKIE_CONSENT_VERSION = 1;
 

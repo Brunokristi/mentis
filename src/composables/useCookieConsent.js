@@ -290,7 +290,7 @@ function createCookieConsent() {
             getWindowObject();
 
         if (windowObject) {
-            windowObject.HumanitasCookies = {
+            windowObject.MentisCookies = {
                 openSettings,
                 getPreferences() {
                     return {

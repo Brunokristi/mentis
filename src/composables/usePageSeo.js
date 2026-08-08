@@ -73,12 +73,12 @@ function setManagedTag(tagName, key, attributes) {
         return null
     }
 
-    const selector = `[data-humanitas-seo="${key}"]`
+    const selector = `[data-mentis-seo="${key}"]`
     let element = document.head.querySelector(selector)
 
     if (!element) {
         element = document.createElement(tagName)
-        element.setAttribute('data-humanitas-seo', key)
+        element.setAttribute('data-mentis-seo', key)
         document.head.appendChild(element)
     }
 
@@ -100,7 +100,7 @@ function clearManagedTags() {
     }
 
     document.head
-        .querySelectorAll('[data-humanitas-seo]')
+        .querySelectorAll('[data-mentis-seo]')
         .forEach((element) => element.remove())
 }
 

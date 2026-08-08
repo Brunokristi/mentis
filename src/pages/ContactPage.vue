@@ -61,11 +61,11 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: 'https://klinickapsychologiars.sk/'
+            url: 'https://klinickapsychologialucenec.sk/'
         },
         {
             name: 'Kontakt',
-            url: 'https://klinickapsychologiars.sk/kontakt'
+            url: 'https://klinickapsychologialucenec.sk/kontakt'
         }
     ]
 });
@@ -227,7 +227,7 @@ const company = computed(() => {
  */
 
 const GOOGLE_MAPS_ADDRESS =
-    'Hviezdoslavova 440/8, 979 01 Rimavská Sobota';
+    'K. Kuzmányho 7, 984 01 Lučenec';
 
 const GOOGLE_MAPS_SHARED_URL =
     'https://maps.app.goo.gl/ZiLiSj7zcNqTfon48';
@@ -1865,7 +1865,7 @@ onBeforeUnmount(() => {
                                     >
                                         <object
                                             ref="statusLoaderObject"
-                                            data="/humanitas_loader_states.svg"
+                                            data="/mentis_loader_states.svg"
                                             type="image/svg+xml"
                                             :aria-label="
                                                 submittedSuccessfully
@@ -1880,7 +1880,7 @@ onBeforeUnmount(() => {
                                                 handleStatusLoaderReady
                                             "
                                         >
-                                            Humanitas
+                                            Mentis
                                         </object>
                                     </div>
     

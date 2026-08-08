@@ -171,7 +171,7 @@ $mailConfig = [
 
     'from_name' =>
         $_ENV['MAIL_FROM_NAME'] ??
-        'Humanitas',
+        'Mentis',
 
     'contact_to' =>
         $_ENV['CONTACT_MAIL_TO'] ??
@@ -197,7 +197,7 @@ $signatureConfig = [
         'images/emailsignature.png',
 
     'cid' =>
-        'humanitas-email-signature',
+        'mentis-email-signature',
 
     'width' =>
         max(
@@ -488,7 +488,7 @@ function isRateLimited(
 
     $filePath =
         sys_get_temp_dir() .
-        '/humanitas-contact-' .
+        '/mentis-contact-' .
         $identifier .
         '.json';
 
@@ -952,7 +952,7 @@ function renderSignatureImage(
     "
 >
     S pozdravom,<br>
-    <strong>Humanitas</strong>
+    <strong>Mentis</strong>
 </div>
 HTML;
     }
@@ -966,7 +966,7 @@ HTML;
 <img
     src="{$safeSource}"
     width="{$width}"
-    alt="Humanitas"
+    alt="Mentis"
     style="
         display: block;
         width: {$width}px;
@@ -1129,7 +1129,7 @@ $safeSentAt =
 
 /*
 |--------------------------------------------------------------------------
-| Internal notification to Humanitas
+| Internal notification to Mentis
 |--------------------------------------------------------------------------
 */
 
@@ -1263,7 +1263,7 @@ HTML;
             $sentAt
         ) .
         "\n\n" .
-        "S pozdravom,\nHumanitas";
+        "S pozdravom,\nMentis";
 
     $notification->send();
 } catch (Exception $exception) {
@@ -1354,7 +1354,7 @@ HTML;
         "Dobrý deň, {$name},\n\n" .
         "ďakujeme za Vašu správu. Úspešne sme ju prijali a ozveme sa Vám hneď, ako to bude možné.\n\n" .
         "Dovtedy Vám prajeme všetko dobré.\n\n" .
-        "S pozdravom,\nHumanitas";
+        "S pozdravom,\nMentis";
 
     $confirmation->send();
 } catch (Exception $exception) {

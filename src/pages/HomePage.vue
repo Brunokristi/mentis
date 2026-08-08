@@ -77,7 +77,7 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: 'https://klinickapsychologiars.sk/'
+            url: `${SITE_URL}/`
         }
     ]
 });
@@ -214,11 +214,13 @@ function updatePerformanceMode() {
 */
 
 const heroPhrases = [
-    'váš príbeh',
-    'to, čo prežívate',
-    'vaše obavy',
-    'vaše pocity',
-    'to, čo je pre vás dôležité'
+    'radosť',
+    'rovnováhu',
+    'pohodu',
+    'energiu',
+    'silu',
+    'slobodu'
+    
 ];
 
 const heroPhraseIndex =
@@ -932,7 +934,7 @@ function clearEmployeeSeoTags() {
 
     document.head
         .querySelectorAll(
-            '[data-humanitas-employee-seo]'
+            '[data-mentis-employee-seo]'
         )
         .forEach((element) => {
             element.remove();
@@ -950,7 +952,7 @@ function setEmployeeSeoTag(
     }
 
     const selector =
-        `[data-humanitas-employee-seo="${key}"]`;
+        `[data-mentis-employee-seo="${key}"]`;
 
     let element =
         document.head.querySelector(
@@ -964,7 +966,7 @@ function setEmployeeSeoTag(
             );
 
         element.setAttribute(
-            'data-humanitas-employee-seo',
+            'data-mentis-employee-seo',
             key
         );
 
@@ -1036,7 +1038,7 @@ function applyEmployeeRouteSeo() {
         'Náš tím';
 
     const title =
-        `${name} | Tím Humanitas`;
+        `${name} | Tím Mentis`;
 
     const position =
         String(
@@ -1053,8 +1055,8 @@ function applyEmployeeRouteSeo() {
     const description =
         bio ||
         (position
-            ? `${name} pôsobí v tíme Humanitas ako ${position}.`
-            : `${name} je členom tímu Humanitas.`);
+            ? `${name} pôsobí v tíme Mentis ako ${position}.`
+            : `${name} je členom tímu Mentis.`);
 
     const canonical =
         `${SITE_URL}/tim/${slug}`;
@@ -1064,7 +1066,7 @@ function applyEmployeeRouteSeo() {
 
     document.head
         .querySelectorAll(
-            '[data-humanitas-seo]'
+            '[data-mentis-seo]'
         )
         .forEach((element) => {
             element.remove();
@@ -1128,7 +1130,7 @@ function applyEmployeeRouteSeo() {
             description,
             worksFor: {
                 '@type': 'MedicalClinic',
-                name: 'Humanitas'
+                name: 'Mentis'
             },
             url: canonical
         })
@@ -1571,12 +1573,13 @@ onBeforeUnmount(() => {
                             text-xl
                             leading-[1.08]
                             text-baige
+                            px-10
 
                             md:text-3xl
                         "
                     >
                         <span>
-                            Podeľte sa s nami o
+                            Doprajte si možnosť znovu objaviť Vašu vnútornú
                         </span>
 
                         <br>
@@ -1653,7 +1656,7 @@ onBeforeUnmount(() => {
                     >
                         {{
                             currentBranch?.description ??
-                            'Ambulancia klinickej a dopravnej psychológie a psychoterapie v Rimavskej Sobote'
+                            'Ambulancia klinickej a dopravnej psychológie a psychoterapie v Lučenci'
                         }}
                     </p>
 
@@ -1676,8 +1679,8 @@ onBeforeUnmount(() => {
                     "
                 >
                     <img
-                        src="/images/humanitas_rodina.svg"
-                        alt="Humanitas"
+                        src="/images/mentis_zena_sediaca.svg"
+                        alt="Mentis"
                         class="
                             block
                             w-full
@@ -1947,8 +1950,8 @@ onBeforeUnmount(() => {
                         <Button
                             :href="contactUrl"
                             background-image=""
-                            background-color="var(--color-green)"
-                            text-color="var(--color-baige)"
+                            background-color="var(--color-baige)"
+                            text-color="var(--color-green)"
                         >
                             Kontaktujte nás
                         </Button>
@@ -1971,7 +1974,7 @@ onBeforeUnmount(() => {
                     "
                 >
                     <img
-                        src="/images/humanitas_ruky.svg"
+                        src="/images/mentis_zena_tancujuca.svg"
                         alt=""
                         aria-hidden="true"
                         draggable="false"
@@ -1980,8 +1983,6 @@ onBeforeUnmount(() => {
                             h-auto
                             w-[min(110vw,32rem)]
                             max-w-none
-                            rotate-[35deg]
-                            scale-[1.35]
                             object-contain
                             [transform-origin:center_center]
 
@@ -1992,13 +1993,13 @@ onBeforeUnmount(() => {
                             lg:left-1/2
                             lg:top-1/2
                             lg:w-[58rem]
-                            lg:scale-[1.65]
+                            lg:scale-[1.25]
                             lg:-translate-x-1/2
                             lg:-translate-y-1/2
                             lg:rotate-[1deg]
 
                             xl:w-[66rem]
-                            xl:scale-[1.95]
+                            xl:scale-[1.65]
                             2xl:w-[72rem]
                             2xl:scale-[2.05]
 
