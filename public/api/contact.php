@@ -171,7 +171,7 @@ $mailConfig = [
 
     'from_name' =>
         $_ENV['MAIL_FROM_NAME'] ??
-        'Mentis',
+        'Mentis - Klinická psychológia s.r.o.',
 
     'contact_to' =>
         $_ENV['CONTACT_MAIL_TO'] ??
@@ -1263,7 +1263,7 @@ HTML;
             $sentAt
         ) .
         "\n\n" .
-        "S pozdravom,\nMentis";
+        "S pozdravom,\Mentis";
 
     $notification->send();
 } catch (Exception $exception) {

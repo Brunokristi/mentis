@@ -83,12 +83,10 @@ function indicatorStateClass(
             count > 1
         "
         class="
-            hidden
             w-full
             items-center
             justify-center
-
-            md:flex
+            flex
         "
     >
         <div

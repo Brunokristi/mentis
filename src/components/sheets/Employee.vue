@@ -23,8 +23,7 @@ const emit = defineEmits([
     'update:modelValue'
 ]);
 
-const bottomSheetRef =
-    ref(null);
+const bottomSheetRef = ref(null);
 
 const isOpen = computed({
     get() {
@@ -95,8 +94,7 @@ const employeePositions = computed(() => {
             .map((position) => {
                 if (
                     position &&
-                    typeof position ===
-                        'object'
+                    typeof position === 'object'
                 ) {
                     return (
                         position.name ??
@@ -177,61 +175,50 @@ function buildPublicAssetUrl(path) {
 </script>
 
 <template>
-<BottomSheet
-    ref="bottomSheetRef"
-    v-model="isOpen"
->
-    <div
-        v-if="employee"
-        class="
-            mx-auto
-            w-full
-            max-w-5xl
-            pb-6
-            pt-4
-
-            sm:pb-10
-            sm:pt-6
-
-            lg:pb-12
-            lg:pt-8
-        "
+    <BottomSheet
+        ref="bottomSheetRef"
+        v-model="isOpen"
     >
         <div
+            v-if="employee"
             class="
-                grid
-                grid-cols-1
-                gap-7
+                mx-auto
+                w-full
+                max-w-5xl
+                px-4
+                pb-6
+                pt-4
+                space-y-10
 
-                md:grid-cols-[11rem_minmax(0,1fr)]
-                md:items-start
-                md:gap-10
+                sm:px-6
+                sm:pb-10
+                sm:pt-6
 
-                lg:grid-cols-[12rem_minmax(0,1fr)]
-                lg:gap-14
+                lg:px-0
+                lg:pb-12
+                lg:pt-8
             "
         >
-            <!--
-                Mobile profile photo
-            -->
+            <!-- Image + name -->
             <div
                 class="
                     flex
-                    items-start
-                    gap-5
+                    items-center
+                    gap-4
 
-                    md:hidden
+                    sm:gap-5
+
+                    lg:gap-6
                 "
             >
+                <!-- Portrait -->
                 <div
                     class="
-                        size-20
+                        w-30
+                        h-40
                         shrink-0
                         overflow-hidden
                         rounded-[20px]
-                        shadow-[var(--shadow-mid)]
-
-                        sm:size-24
                     "
                 >
                     <img
@@ -263,6 +250,10 @@ function buildPublicAssetUrl(path) {
                                 text-2xl
                                 font-bold
                                 text-green/30
+
+                                sm:text-3xl
+
+                                lg:text-4xl
                             "
                         >
                             {{ employeeInitials }}
@@ -270,134 +261,13 @@ function buildPublicAssetUrl(path) {
                     </div>
                 </div>
 
-                <!-- Mobile header -->
+                <!-- Name -->
                 <div
                     class="
-                        flex
                         min-w-0
-                        flex-1
-                        flex-col
-                        gap-3
-                    "
-                >
-                    <h2
-                        class="
-                            text-xl
-                            font-bold
-                            leading-[1.15]
-                            text-green
-                        "
-                    >
-                        {{ employeeName }}
-                    </h2>
-
-                    <div
-                        v-if="employeePositions.length"
-                        class="
-                            flex
-                            flex-col
-                            gap-2
-                        "
-                    >
-                        <div
-                            v-for="(
-                                position,
-                                index
-                            ) in employeePositions"
-                            :key="
-                                `mobile-position-${index}-${position}`
-                            "
-                            class="
-                                border-l-2
-                                border-green
-                                pl-3
-                            "
-                        >
-                            <p
-                                class="
-                                    text-regular
-                                    text-sm
-                                    font-bold
-                                    leading-5
-                                    text-green
-                                "
-                            >
-                                {{ position }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--
-                Desktop portrait
-            -->
-            <div
-                class="
-                    hidden
-                    min-w-0
-
-                    md:sticky
-                    md:top-0
-                    md:block
-                "
-            >
-                <img
-                    v-if="employeePhotoUrl"
-                    :src="employeePhotoUrl"
-                    :alt="employeeName"
-                    class="
-                        aspect-[3/4]
-                        w-full
-                        rounded-[1.75rem]
-                        object-cover
-                        shadow-[var(--shadow-mid)]
-                    "
-                >
-
-                <div
-                    v-else
-                    class="
                         flex
-                        aspect-[3/4]
-                        w-full
-                        items-center
-                        justify-center
-                        rounded-[1.75rem]
-                        bg-green/10
-                    "
-                >
-                    <span
-                        class="
-                            font-heading
-                            text-3xl
-                            font-bold
-                            text-green/30
-
-                            lg:text-4xl
-                        "
-                    >
-                        {{ employeeInitials }}
-                    </span>
-                </div>
-            </div>
-
-            <!--
-                Information
-            -->
-            <div
-                class="
-                    min-w-0
-                "
-            >
-                <!-- Desktop header -->
-                <div
-                    class="
-                        hidden
                         flex-col
-                        gap-4
-
-                        md:flex
+                        gap-5
                     "
                 >
                     <h2
@@ -406,6 +276,8 @@ function buildPublicAssetUrl(path) {
                             font-bold
                             leading-[1.15]
                             text-green
+
+                            sm:text-xl
 
                             lg:text-2xl
                         "
@@ -427,7 +299,7 @@ function buildPublicAssetUrl(path) {
                                 index
                             ) in employeePositions"
                             :key="
-                                `desktop-position-${index}-${position}`
+                                `position-${index}-${position}`
                             "
                             class="
                                 border-l-2
@@ -438,9 +310,12 @@ function buildPublicAssetUrl(path) {
                             <p
                                 class="
                                     text-regular
+                                    text-sm
                                     font-bold
                                     leading-5
                                     text-green
+
+                                    sm:text-base
                                 "
                             >
                                 {{ position }}
@@ -448,24 +323,25 @@ function buildPublicAssetUrl(path) {
                         </div>
                     </div>
                 </div>
-
-                <!-- Bio -->
-                <p
-                    v-if="employeeBio"
-                    class="
-                        text-regular
-                        whitespace-pre-line
-                        leading-[1.75]
-                        text-green/75
-
-                        md:mt-7
-                        md:max-w-3xl
-                    "
-                >
-                    {{ employeeBio }}
-                </p>
             </div>
+
+            <!-- Positions -->
+
+
+            <!-- Bio -->
+            <p
+                v-if="employeeBio"
+                class="
+                    mt-7
+                    whitespace-pre-line
+                    text-regular
+                    leading-[1.75]
+                    text-green/75
+
+                "
+            >
+                {{ employeeBio }}
+            </p>
         </div>
-    </div>
-</BottomSheet>
+    </BottomSheet>
 </template>

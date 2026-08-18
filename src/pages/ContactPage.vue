@@ -61,11 +61,11 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: 'https://klinickapsychologialucenec.sk/'
+            url: 'https://klinickapsychologiars.sk/'
         },
         {
             name: 'Kontakt',
-            url: 'https://klinickapsychologialucenec.sk/kontakt'
+            url: 'https://klinickapsychologiars.sk/kontakt'
         }
     ]
 });
@@ -128,14 +128,25 @@ const statusLoaderObject =
 const showStatusPanel = computed(() => {
     return (
         isSubmitting.value ||
-        submittedSuccessfully.value
+        submittedSuccessfully.value ||
+        Boolean(submitError.value)
     );
 });
 
 const statusLoaderState = computed(() => {
-    return submittedSuccessfully.value
-        ? 'success'
-        : 'loading';
+    if (submittedSuccessfully.value) {
+        return 'success';
+    }
+
+    if (submitError.value) {
+        return 'error';
+    }
+
+    if (isSubmitting.value) {
+        return 'loading';
+    }
+
+    return 'loading';
 });
 
 /*
@@ -227,10 +238,10 @@ const company = computed(() => {
  */
 
 const GOOGLE_MAPS_ADDRESS =
-    'K. Kuzmányho 7, 984 01 Lučenec';
+    'K. Kuzmányho 7, 984 01 Lučenec, Slovensko';
 
 const GOOGLE_MAPS_SHARED_URL =
-    'https://maps.app.goo.gl/ZiLiSj7zcNqTfon48';
+    'https://maps.app.goo.gl/YWWw9SFQvjXPzV2T9';
 
 const googleMapsQuery =
     computed(() => {
@@ -675,12 +686,20 @@ function sendAnotherMessage() {
     submittedSuccessfully.value =
         false;
 
+    submitError.value =
+        null;
+
     form.form_started_at =
         Math.floor(
             Date.now() / 1000
         );
 
     resetMessageSuggestionAnimation();
+}
+
+function retryAfterSubmitError() {
+    submitError.value =
+        null;
 }
 
 function setLoaderObjectState(
@@ -703,6 +722,21 @@ function setLoaderObjectState(
             : 'loading';
 
     try {
+        const loaderApi =
+            objectElement
+                .contentWindow
+                ?.mentisLoader;
+
+        if (
+            loaderApi &&
+            typeof loaderApi.setState ===
+                'function'
+        ) {
+            loaderApi.setState(
+                nextState
+            );
+        }
+
         const svgRoot =
             objectElement
                 .contentDocument
@@ -1829,13 +1863,8 @@ onBeforeUnmount(() => {
                                         absolute
                                         inset-0
                                         z-30
-                                        flex
                                         min-h-[34rem]
-                                        flex-col
-                                        items-center
                                         bg-baige
-                                        px-6
-                                        pt-10
                                         text-center
     
                                         transition-opacity
@@ -1854,6 +1883,11 @@ onBeforeUnmount(() => {
                                     <!-- Fixed loader slot: it never moves -->
                                     <div
                                         class="
+                                            absolute
+                                            left-1/2
+                                            top-1/2
+                                            -translate-x-1/2
+                                            -translate-y-40
                                             pointer-events-none
                                             flex
                                             h-[9rem]
@@ -1868,13 +1902,15 @@ onBeforeUnmount(() => {
                                             data="/mentis_loader_states.svg"
                                             type="image/svg+xml"
                                             :aria-label="
-                                                submittedSuccessfully
+                                                statusLoaderState === 'success'
                                                     ? 'Správa odoslaná'
-                                                    : 'Odosielanie správy'
+                                                    : statusLoaderState === 'error'
+                                                        ? 'Správu sa nepodarilo odoslať'
+                                                        : 'Odosielanie správy'
                                             "
                                             class="
                                                 h-auto
-                                                w-full
+                                                w-18
                                             "
                                             @load="
                                                 handleStatusLoaderReady
@@ -1887,21 +1923,27 @@ onBeforeUnmount(() => {
                                     <!-- Reserved text area below the fixed loader -->
                                     <div
                                         class="
+                                            absolute
+                                            left-1/2
+                                            top-[calc(50%)]
+                                            -translate-x-1/2
                                             flex
-                                            min-h-[15rem]
                                             w-full
+                                            max-w-xl
                                             flex-col
                                             items-center
-                                            pt-6
+                                            px-6
                                         "
                                     >
                                         <Transition
                                             name="success-content"
+                                            mode="out-in"
                                         >
                                             <div
                                                 v-if="
                                                     submittedSuccessfully
                                                 "
+                                                key="status-success"
                                                 class="
                                                     flex
                                                     w-full
@@ -1946,6 +1988,58 @@ onBeforeUnmount(() => {
                                                         "
                                                     >
                                                         Poslať ďalšiu správu
+                                                    </Button>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                v-else-if="
+                                                    submitError
+                                                "
+                                                key="status-error"
+                                                class="
+                                                    flex
+                                                    w-full
+                                                    flex-col
+                                                    items-center
+                                                "
+                                            >
+                                                <h2
+                                                    class="
+                                                        text-xl
+                                                        font-bold
+                                                        text-green
+                                                    "
+                                                >
+                                                    Správu sa nepodarilo odoslať
+                                                </h2>
+
+                                                <p
+                                                    class="
+                                                        text-regular
+                                                        mt-3
+                                                        max-w-md
+                                                        leading-[1.65]
+                                                        text-green/60
+                                                    "
+                                                >
+                                                    {{ submitError }}
+                                                </p>
+
+                                                <div
+                                                    class="
+                                                        mt-7
+                                                    "
+                                                >
+                                                    <Button
+                                                        background-image=""
+                                                        background-color="var(--color-green)"
+                                                        text-color="var(--color-baige)"
+                                                        @click="
+                                                            retryAfterSubmitError
+                                                        "
+                                                    >
+                                                        Skúsiť znova
                                                     </Button>
                                                 </div>
                                             </div>

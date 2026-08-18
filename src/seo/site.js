@@ -2,7 +2,7 @@ export const SITE_NAME = 'Mentis'
 
 export const SITE_ALTERNATE_NAME = 'Klinicka psychologia Mentis'
 
-export const SITE_URL = 'https://klinickapsychologialucenec.sk'
+export const SITE_URL = 'https://klinickapsychologiars.sk'
 
 export const SITE_LOCALE = 'sk_SK'
 

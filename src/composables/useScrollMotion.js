@@ -5,6 +5,8 @@ import {
     watch
 } from 'vue'
 
+import { shouldReduceMotionForBrowser } from '../utils/browserCompatibility'
+
 const DEFAULT_VARIANTS = [
     {
         positionResponse: 0.16,
@@ -134,6 +136,10 @@ export function useScrollMotion(
         options.disableOnCoarsePointer ??
         false
 
+    const disableOnMobileSafari =
+        options.disableOnMobileSafari ??
+        true
+
     let motionFrame =
         null
 
@@ -145,6 +151,12 @@ export function useScrollMotion(
 
     let started =
         false
+
+    let isDocumentVisible =
+        typeof document ===
+            'undefined'
+            ? true
+            : !document.hidden
 
     const sourceStates =
         new Map()
@@ -184,6 +196,22 @@ export function useScrollMotion(
         }
 
         if (
+            disableOnMobileSafari &&
+            typeof navigator !==
+            'undefined' &&
+            shouldReduceMotionForBrowser()
+        ) {
+            const hasCoarsePointer =
+                window.matchMedia?.(
+                    '(pointer: coarse)'
+                )?.matches ?? false
+
+            if (hasCoarsePointer) {
+                return false
+            }
+        }
+
+        if (
             disableOnCoarsePointer &&
             coarsePointerQuery?.matches
         ) {
@@ -216,6 +244,31 @@ export function useScrollMotion(
             reducedMotionQuery
                 ?.matches
         )
+    }
+
+    function isDocumentVisibleNow() {
+        return Boolean(
+            typeof document ===
+                'undefined'
+                ? true
+                : !document.hidden
+        )
+    }
+
+    function cancelMotionFrame() {
+        if (
+            motionFrame ===
+            null
+        ) {
+            return
+        }
+
+        window.cancelAnimationFrame(
+            motionFrame
+        )
+
+        motionFrame =
+            null
     }
 
     function getPosition(
@@ -299,6 +352,18 @@ export function useScrollMotion(
     function getElementsForSource(
         source
     ) {
+        for (const [element] of Array.from(
+            elementStates.entries()
+        )) {
+            if (
+                !element.isConnected
+            ) {
+                elementStates.delete(
+                    element
+                )
+            }
+        }
+
         /*
          * Window scroll:
          * use everything inside this
@@ -431,6 +496,12 @@ export function useScrollMotion(
             scale: 1,
             targetScale: 1,
 
+            appliedPosition: 0,
+            appliedRotate:
+                restingRotation,
+            appliedScale: 1,
+            isActive: false,
+
             baseRotation,
             rotationMode,
             maxDistance,
@@ -552,6 +623,37 @@ export function useScrollMotion(
         element,
         state
     ) {
+        const nextPosition =
+            axis === 'x'
+                ? state.position
+                : state.position
+
+        const nextRotate =
+            state.rotate
+
+        const nextScale =
+            state.scale
+
+        if (
+            state.appliedPosition ===
+            nextPosition &&
+            state.appliedRotate ===
+            nextRotate &&
+            state.appliedScale ===
+            nextScale
+        ) {
+            return
+        }
+
+        state.appliedPosition =
+            nextPosition
+
+        state.appliedRotate =
+            nextRotate
+
+        state.appliedScale =
+            nextScale
+
         if (
             axis ===
             'x'
@@ -614,6 +716,18 @@ export function useScrollMotion(
 
         state.targetScale =
             1
+
+        state.appliedPosition =
+            0
+
+        state.appliedRotate =
+            restingRotation
+
+        state.appliedScale =
+            1
+
+        state.isActive =
+            false
 
         element.style.setProperty(
             '--scroll-x',
@@ -892,14 +1006,21 @@ export function useScrollMotion(
                     sourceStillMoving =
                         true
 
-                    element.style.setProperty(
-                        'will-change',
-                        'transform'
-                    )
+                    if (
+                        !state.isActive
+                    ) {
+                        state.isActive =
+                            true
 
-                    element.classList.add(
-                        'is-motion-active'
-                    )
+                        element.style.setProperty(
+                            'will-change',
+                            'transform'
+                        )
+
+                        element.classList.add(
+                            'is-motion-active'
+                        )
+                    }
 
                     return
                 }
@@ -925,15 +1046,17 @@ export function useScrollMotion(
         if (
             prefersReducedMotion()
         ) {
-            sourceStates.forEach(
-                (state) => {
-                    state.velocity =
-                        0
-                }
-            )
-
             resetAllElements()
 
+            motionFrame =
+                null
+
+            return
+        }
+
+        if (
+            !isDocumentVisibleNow()
+        ) {
             motionFrame =
                 null
 
@@ -981,7 +1104,8 @@ export function useScrollMotion(
     function startMotionLoop() {
         if (
             motionFrame !==
-            null
+            null ||
+            !isDocumentVisibleNow()
         ) {
             return
         }
@@ -990,6 +1114,34 @@ export function useScrollMotion(
             window.requestAnimationFrame(
                 updateMotion
             )
+    }
+
+    function handleVisibilityChange() {
+        const nextVisible =
+            isDocumentVisibleNow()
+
+        if (
+            nextVisible ===
+            isDocumentVisible
+        ) {
+            return
+        }
+
+        isDocumentVisible =
+            nextVisible
+
+        if (!nextVisible) {
+            cancelMotionFrame()
+
+            return
+        }
+
+        if (
+            started &&
+            shouldRun()
+        ) {
+            startMotionLoop()
+        }
     }
 
     function handleWindowScroll() {
@@ -1129,31 +1281,28 @@ export function useScrollMotion(
 
     function handleReducedMotionChange() {
         if (
-            !prefersReducedMotion()
+            prefersReducedMotion()
         ) {
+            sourceStates.forEach(
+                (state) => {
+                    state.velocity =
+                        0
+                }
+            )
+
+            cancelMotionFrame()
+            resetAllElements()
+
             return
         }
 
-        sourceStates.forEach(
-            (state) => {
-                state.velocity =
-                    0
-            }
-        )
-
         if (
-            motionFrame !==
-            null
+            started &&
+            shouldRun() &&
+            isDocumentVisibleNow()
         ) {
-            window.cancelAnimationFrame(
-                motionFrame
-            )
-
-            motionFrame =
-                null
+            startMotionLoop()
         }
-
-        resetAllElements()
     }
 
     function start() {
@@ -1161,7 +1310,8 @@ export function useScrollMotion(
             typeof window ===
             'undefined' ||
             started ||
-            !shouldRun()
+            !shouldRun() ||
+            !isDocumentVisibleNow()
         ) {
             return
         }
@@ -1241,6 +1391,8 @@ export function useScrollMotion(
             resetAllElements()
         }
 
+        cancelMotionFrame()
+
         window.removeEventListener(
             'scroll',
             handleWindowScroll
@@ -1258,18 +1410,6 @@ export function useScrollMotion(
                 'change',
                 handleReducedMotionChange
             )
-
-        if (
-            motionFrame !==
-            null
-        ) {
-            window.cancelAnimationFrame(
-                motionFrame
-            )
-
-            motionFrame =
-                null
-        }
 
         sourceStates.clear()
         elementStates.clear()
@@ -1322,6 +1462,30 @@ export function useScrollMotion(
                 handleCoarsePointerChange
             )
 
+        document.addEventListener(
+            'visibilitychange',
+            handleVisibilityChange,
+            {
+                passive: true
+            }
+        )
+
+        window.addEventListener(
+            'pageshow',
+            handleVisibilityChange,
+            {
+                passive: true
+            }
+        )
+
+        window.addEventListener(
+            'pagehide',
+            handleVisibilityChange,
+            {
+                passive: true
+            }
+        )
+
         syncRunningState()
     })
 
@@ -1336,6 +1500,21 @@ export function useScrollMotion(
 
         coarsePointerQuery =
             null
+
+        document.removeEventListener(
+            'visibilitychange',
+            handleVisibilityChange
+        )
+
+        window.removeEventListener(
+            'pageshow',
+            handleVisibilityChange
+        )
+
+        window.removeEventListener(
+            'pagehide',
+            handleVisibilityChange
+        )
 
         stop()
     })

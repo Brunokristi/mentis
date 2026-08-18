@@ -72,7 +72,7 @@ usePageSeo({
                 'Domov',
 
             url:
-                'https://klinickapsychologialucenec.sk/'
+                'https://klinickapsychologiars.sk/'
         },
 
         {
@@ -80,7 +80,7 @@ usePageSeo({
                 'Služby',
 
             url:
-                'https://klinickapsychologialucenec.sk/sluzby'
+                'https://klinickapsychologiars.sk/sluzby'
         }
     ]
 });

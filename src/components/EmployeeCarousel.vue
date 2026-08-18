@@ -108,6 +108,12 @@ const pointerVelocity =
 const pointerMoved =
     ref(false);
 
+let lastTapSelectedIndex =
+    null;
+
+let lastTapSelectedAt =
+    0;
+
 const exitingCards =
     ref({});
 
@@ -409,9 +415,11 @@ function getCardWrapperClasses(
         );
 
     return [
-        active
-            ? 'pointer-events-auto'
-            : 'pointer-events-none',
+        isCardExiting(
+            index
+        )
+            ? 'pointer-events-none'
+            : 'pointer-events-auto',
 
         active &&
         isDragging.value
@@ -428,6 +436,33 @@ function getCardWrapperClasses(
             ? 'pointer-events-none'
             : ''
     ];
+}
+
+function getCardIndexFromTarget(
+    target
+) {
+    const cardElement =
+        target?.closest?.(
+            '[data-employee-index]'
+        );
+
+    if (!cardElement) {
+        return null;
+    }
+
+    const rawIndex =
+        cardElement.getAttribute(
+            'data-employee-index'
+        );
+
+    const parsedIndex =
+        Number(rawIndex);
+
+    if (!Number.isInteger(parsedIndex)) {
+        return null;
+    }
+
+    return parsedIndex;
 }
 
 function getCardWrapperStyle(
@@ -863,6 +898,19 @@ function handlePointerDown(
         return;
     }
 
+    const targetCardIndex =
+        getCardIndexFromTarget(
+            event.target
+        );
+
+    if (
+        targetCardIndex === null ||
+        targetCardIndex !==
+            currentIndex.value
+    ) {
+        return;
+    }
+
     updateCardWidth();
 
     pointerId.value =
@@ -1007,6 +1055,12 @@ function handlePointerEnd(
         resetDragState();
 
         if (wasClick) {
+            lastTapSelectedIndex =
+                currentIndex.value;
+
+            lastTapSelectedAt =
+                performance.now();
+
             selectCurrent();
         }
 
@@ -1093,6 +1147,21 @@ function selectEmployee(index) {
         index < 0 ||
         index >= props.items.length
     ) {
+        return;
+    }
+
+    const now =
+        performance.now();
+
+    if (
+        index ===
+            lastTapSelectedIndex &&
+        now - lastTapSelectedAt <
+            250
+    ) {
+        lastTapSelectedIndex =
+            null;
+
         return;
     }
 
@@ -1222,6 +1291,9 @@ onBeforeUnmount(() => {
                         index
                     "
                     data-employee-card
+                    :data-employee-index="
+                        index
+                    "
                     class="
                         relative
                         col-start-1

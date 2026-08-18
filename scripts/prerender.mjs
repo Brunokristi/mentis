@@ -286,13 +286,13 @@ function escapeHtml(value) {
 function buildStaticBody(routeKey) {
     if (routeKey === 'domov') {
         return `
-            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
+            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#b86c63;">
                 <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
                 <h1 style="font-size:clamp(2.4rem,5vw,4.8rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Klinický psychológ Lučenec</h1>
                 <p style="font-size:1.08rem;line-height:1.75;max-width:60ch;margin:0 0 28px;">Mentis ponúka odbornú psychologickú starostlivosť, prehľad služieb a možnosť objednania priamo cez web.</p>
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                    <a href="/sluzby" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#335940;color:#fbf9f3;text-decoration:none;">Pozrieť služby</a>
-                    <a href="/kontakt" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#fbf9f3;color:#335940;text-decoration:none;border:1px solid #c9d3c3;">Kontakt</a>
+                    <a href="/sluzby" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#b86c63;color:#fbf9f3;text-decoration:none;">Pozrieť služby</a>
+                    <a href="/kontakt" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#fbf9f3;color:#b86c63;text-decoration:none;border:1px solid #c9d3c3;">Kontakt</a>
                 </div>
             </main>
         `
@@ -300,7 +300,7 @@ function buildStaticBody(routeKey) {
 
     if (routeKey === 'services') {
         return `
-            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
+            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#b86c63;">
                 <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
                 <h1 style="font-size:clamp(2.1rem,5vw,4.2rem);line-height:.95;margin:0 0 20px;max-width:14ch;">Psychologické služby</h1>
                 <p style="font-size:1.08rem;line-height:1.75;max-width:64ch;margin:0;">Prehľad odborných psychologických služieb ambulancie Mentis. Detailný zoznam služieb je dostupný v aplikácii po načítaní stránky.</p>
@@ -310,7 +310,7 @@ function buildStaticBody(routeKey) {
 
     if (routeKey === 'contact') {
         return `
-            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
+            <main style="max-width:960px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#b86c63;">
                 <p style="letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:#5d715b;margin:0 0 18px;">Mentis</p>
                 <h1 style="font-size:clamp(2.1rem,5vw,4.2rem);line-height:.95;margin:0 0 20px;max-width:12ch;">Kontaktujte Mentis</h1>
                 <p style="font-size:1.08rem;line-height:1.75;max-width:64ch;margin:0;">Napíšte nám cez kontaktný formulár alebo si pozrite kontaktné údaje a ordinačné hodiny v plnej aplikácii.</p>
@@ -320,9 +320,9 @@ function buildStaticBody(routeKey) {
 
     if (routeKey === 'domov-redirect') {
         return `
-            <main style="max-width:720px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#335940;">
+            <main style="max-width:720px;margin:0 auto;padding:72px 24px;font-family:system-ui,sans-serif;color:#b86c63;">
                 <h1 style="font-size:2rem;line-height:1.1;margin:0 0 16px;">Presmerovanie na domovskú stránku</h1>
-                <p style="font-size:1.05rem;line-height:1.7;margin:0;">Táto adresa slúži len ako kompatibilný vstup. Pokračujte na <a href="/" style="color:#335940;">hlavnú stránku</a>.</p>
+                <p style="font-size:1.05rem;line-height:1.7;margin:0;">Táto adresa slúži len ako kompatibilný vstup. Pokračujte na <a href="/" style="color:#b86c63;">hlavnú stránku</a>.</p>
                 <script>window.location.replace('/');</script>
             </main>
         `

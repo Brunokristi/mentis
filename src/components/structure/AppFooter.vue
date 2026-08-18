@@ -203,7 +203,7 @@ const ambulances = [
         href: 'https://klinickapsychologialucenec.sk'
     },
     {
-        name: 'Mentis',
+        name: 'Humanitas',
         logo: '/images/humanitas_logo_horizontalne.svg',
         href: 'https://klinickapsychologiars.sk'
     }
@@ -337,32 +337,31 @@ function handleCookiesClick() {
         "
     >
         <img
-            src="/images/mentis_ruky.svg"
+            src="/images/mentis_zena_tancujuca_terakota.svg"
             alt=""
             aria-hidden="true"
             draggable="false"
             class="
-                -scale-x-100
-                rotate-[10deg]
                 pointer-events-none
                 absolute
-                bottom-[-5rem]
-                right-[-5rem]
+                bottom-[-4rem]
+                right-[-8rem]
                 z-0
                 h-auto
                 max-h-[50rem]
                 max-w-none
                 opacity-[0.2]
 
-                sm:bottom-[-1rem]
+                sm:bottom-[-9rem]
                 sm:w-[60%]
 
-                md:bottom-[-10rem]
-                md:right-[-5rem]
+                md:bottom-[-15rem]
+                md:right-[-15rem]
                 md:w-[40rem]
 
-                lg:bottom-[-15rem]
+                lg:bottom-[-10rem]
 
+                xl:right-[-15rem]
             "
         >
 

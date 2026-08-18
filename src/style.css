@@ -4,7 +4,7 @@
 
 @theme {
   --color-baige: #fbf9f3;
-  --color-green: #B86C63;
+  --color-green: #b86c63;
 
   --font-heading: "Cormorant Garamond", Georgia, serif;
   --font-body: "Mulish", Arial, sans-serif;
@@ -12,7 +12,7 @@
 
 :root {
   --cream: #fbf9f3;
-  --text-dark: #335940;
+  --text-dark: #b86c63;
 
   --font-heading:
     "Cormorant Garamond",
@@ -33,7 +33,7 @@
     0 8px 20px rgba(31, 55, 43, 0.14);
 
   --shadow-strong:
-    0 -10px 16px 0 rgba(127, 52, 52, 0.2);
+    0 -10px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 *,
@@ -52,7 +52,7 @@ html {
   scrollbar-gutter: stable;
 }
 
-html[data-mentis-transition] {
+html[data-humanitas-transition] {
   overflow-anchor: none;
 }
 
@@ -159,7 +159,7 @@ video {
     hidden;
 
   will-change:
-    transform;
+    auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

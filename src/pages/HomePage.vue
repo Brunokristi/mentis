@@ -77,7 +77,7 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: `${SITE_URL}/`
+            url: 'https://klinickapsychologiars.sk/'
         }
     ]
 });
@@ -214,20 +214,22 @@ function updatePerformanceMode() {
 */
 
 const heroPhrases = [
-    'radosť',
-    'rovnováhu',
+    'odvahu',
     'pohodu',
     'energiu',
+    'rovnováhu',
+    'radosť',
     'silu',
-    'slobodu'
-    
-];
+]
 
 const heroPhraseIndex =
     ref(0);
 
 let heroPhraseTimer =
     null;
+
+let heroPhraseVisibilityBound =
+    false;
 
 const heroPhrase = computed(() => {
     return (
@@ -246,7 +248,7 @@ function stopHeroPhraseAnimation() {
         return;
     }
 
-    window.clearInterval(
+    window.clearTimeout(
         heroPhraseTimer
     );
 
@@ -254,28 +256,73 @@ function stopHeroPhraseAnimation() {
         null;
 }
 
-function startHeroPhraseAnimation() {
+function scheduleHeroPhraseAnimation() {
     if (
         heroPhraseTimer !==
             null ||
         !props.expanded ||
-        props.transitioning
+        props.transitioning ||
+        document.visibilityState ===
+            'hidden'
     ) {
         return;
     }
 
     heroPhraseTimer =
-        window.setInterval(
+        window.setTimeout(
             () => {
+                heroPhraseTimer =
+                    null;
+
                 heroPhraseIndex.value =
                     (
                         heroPhraseIndex.value +
                         1
                     ) %
                     heroPhrases.length;
+
+                if (
+                    props.expanded &&
+                    !props.transitioning &&
+                    document.visibilityState !==
+                        'hidden'
+                ) {
+                    scheduleHeroPhraseAnimation();
+                }
             },
             2800
         );
+}
+
+function startHeroPhraseAnimation() {
+    if (
+        !props.expanded ||
+        props.transitioning
+    ) {
+        stopHeroPhraseAnimation();
+
+        return;
+    }
+
+    scheduleHeroPhraseAnimation();
+}
+
+function handleHeroVisibilityChange() {
+    if (
+        document.visibilityState ===
+        'hidden'
+    ) {
+        stopHeroPhraseAnimation();
+
+        return;
+    }
+
+    if (
+        props.expanded &&
+        !props.transitioning
+    ) {
+        scheduleHeroPhraseAnimation();
+    }
 }
 
 /*
@@ -966,7 +1013,7 @@ function setEmployeeSeoTag(
             );
 
         element.setAttribute(
-            'data-mentis-employee-seo',
+        'data-mentis-employee-seo',
             key
         );
 
@@ -1493,6 +1540,30 @@ onMounted(() => {
             updatePerformanceMode
         );
 
+    document.addEventListener(
+        'visibilitychange',
+        handleHeroVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
+    window.addEventListener(
+        'pageshow',
+        handleHeroVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
+    window.addEventListener(
+        'pagehide',
+        handleHeroVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
     updatePerformanceMode();
     startHeroPhraseAnimation();
     scheduleHeavyContent();
@@ -1508,6 +1579,21 @@ onBeforeUnmount(() => {
             'change',
             updatePerformanceMode
         );
+
+    document.removeEventListener(
+        'visibilitychange',
+        handleHeroVisibilityChange
+    );
+
+    window.removeEventListener(
+        'pageshow',
+        handleHeroVisibilityChange
+    );
+
+    window.removeEventListener(
+        'pagehide',
+        handleHeroVisibilityChange
+    );
 
     performanceMediaQuery =
         null;
@@ -1573,13 +1659,14 @@ onBeforeUnmount(() => {
                             text-xl
                             leading-[1.08]
                             text-baige
-                            px-10
 
                             md:text-3xl
                         "
                     >
                         <span>
-                            Doprajte si možnosť znovu objaviť Vašu vnútornú
+                            Doprajte si možnosť
+                            <br> 
+                            znovu objaviť Vašu vnútornú
                         </span>
 
                         <br>
@@ -1656,7 +1743,7 @@ onBeforeUnmount(() => {
                     >
                         {{
                             currentBranch?.description ??
-                            'Ambulancia klinickej a dopravnej psychológie a psychoterapie v Lučenci'
+                            'Ambulancia klinickej a dopravnej psychológie v Lučenci'
                         }}
                     </p>
 
@@ -1974,7 +2061,7 @@ onBeforeUnmount(() => {
                     "
                 >
                     <img
-                        src="/images/mentis_zena_tancujuca.svg"
+                        src="/images/mentis_ruky.svg"
                         alt=""
                         aria-hidden="true"
                         draggable="false"
@@ -1983,23 +2070,25 @@ onBeforeUnmount(() => {
                             h-auto
                             w-[min(110vw,32rem)]
                             max-w-none
+                            scale-[1.25]
                             object-contain
                             [transform-origin:center_center]
 
                             md:w-[36rem]
-                            md:scale-[1.55]
+                            md:scale-[1.25]
+                            md:rotate-[-30deg]
 
                             lg:absolute
                             lg:left-1/2
                             lg:top-1/2
                             lg:w-[58rem]
-                            lg:scale-[1.25]
+                            lg:scale-[1.65]
                             lg:-translate-x-1/2
                             lg:-translate-y-1/2
                             lg:rotate-[1deg]
 
                             xl:w-[66rem]
-                            xl:scale-[1.65]
+                            xl:scale-[1.95]
                             2xl:w-[72rem]
                             2xl:scale-[2.05]
 

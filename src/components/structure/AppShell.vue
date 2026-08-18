@@ -291,6 +291,9 @@ let marqueeAnimation =
 let marqueeResizeObserver =
     null;
 
+let marqueeLayoutFrame =
+    null;
+
 let reducedMotionMediaQuery =
     null;
 
@@ -756,6 +759,65 @@ function stopMarqueeAnimation() {
         null;
 }
 
+function clearMarqueeLayoutFrame() {
+    if (
+        marqueeLayoutFrame ===
+        null
+    ) {
+        return;
+    }
+
+    window.cancelAnimationFrame(
+        marqueeLayoutFrame
+    );
+
+    marqueeLayoutFrame =
+        null;
+}
+
+function scheduleMarqueeRefresh() {
+    clearMarqueeLayoutFrame();
+
+    marqueeLayoutFrame =
+        window.requestAnimationFrame(
+            () => {
+                marqueeLayoutFrame =
+                    null;
+
+                startMarqueeAnimation();
+            }
+        );
+}
+
+function pauseMarqueeAnimation() {
+    if (
+        marqueeAnimation?.playState ===
+        'running'
+    ) {
+        marqueeAnimation.pause();
+    }
+}
+
+function resumeMarqueeAnimation() {
+    if (
+        !marqueeAnimation ||
+        marqueeAnimation.playState ===
+            'running'
+    ) {
+        return;
+    }
+
+    if (
+        hasReducedMotionPreference.value ||
+        document.visibilityState ===
+            'hidden'
+    ) {
+        return;
+    }
+
+    marqueeAnimation.play();
+}
+
 async function startMarqueeAnimation() {
     stopMarqueeAnimation();
 
@@ -774,19 +836,16 @@ async function startMarqueeAnimation() {
         !viewport ||
         !track ||
         !group ||
-        !announcementMessages.value.length
+        !announcementMessages.value.length ||
+        hasReducedMotionPreference.value ||
+        document.visibilityState ===
+            'hidden'
     ) {
         return;
     }
 
     track.style.transform =
         'translate3d(0, 0, 0)';
-
-    if (
-        hasReducedMotionPreference.value
-    ) {
-        return;
-    }
 
     const groupWidth =
         group.getBoundingClientRect()
@@ -846,6 +905,24 @@ async function startMarqueeAnimation() {
                 easing: 'linear'
             }
         );
+}
+
+function handleMarqueeVisibilityChange() {
+    if (
+        document.visibilityState ===
+        'hidden'
+    ) {
+        pauseMarqueeAnimation();
+
+        return;
+    }
+
+    if (
+        shouldShowAnnouncementRibbon.value &&
+        !hasReducedMotionPreference.value
+    ) {
+        resumeMarqueeAnimation();
+    }
 }
 
 function handleReducedMotionChange(event) {
@@ -1008,6 +1085,21 @@ function setLoaderState(state) {
 
     const svgRoot =
         getLoaderSvgRoot();
+
+    const loaderApi =
+        loaderObject.value
+            ?.contentWindow
+            ?.Loader;
+
+    if (
+        loaderApi &&
+        typeof loaderApi.setState ===
+            'function'
+    ) {
+        loaderApi.setState(
+            nextState
+        );
+    }
 
     if (!svgRoot) {
         return false;
@@ -1187,7 +1279,7 @@ async function retryLoad() {
 watch(
     announcementMessages,
     () => {
-        startMarqueeAnimation();
+        scheduleMarqueeRefresh();
     },
     {
         deep: true
@@ -1302,9 +1394,33 @@ onMounted(() => {
         handleReducedMotionChange
     );
 
+    document.addEventListener(
+        'visibilitychange',
+        handleMarqueeVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
+    window.addEventListener(
+        'pageshow',
+        handleMarqueeVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
+    window.addEventListener(
+        'pagehide',
+        handleMarqueeVisibilityChange,
+        {
+            passive: true
+        }
+    );
+
     marqueeResizeObserver =
         new ResizeObserver(() => {
-            startMarqueeAnimation();
+            scheduleMarqueeRefresh();
         });
 
     nextTick(() => {
@@ -1324,7 +1440,7 @@ onMounted(() => {
             );
         }
 
-        startMarqueeAnimation();
+        scheduleMarqueeRefresh();
     });
 
     navigationResizeObserver =
@@ -1360,6 +1476,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+    clearMarqueeLayoutFrame();
     stopMarqueeAnimation();
 
     marqueeResizeObserver
@@ -1373,6 +1490,21 @@ onUnmounted(() => {
             'change',
             handleReducedMotionChange
         );
+
+    document.removeEventListener(
+        'visibilitychange',
+        handleMarqueeVisibilityChange
+    );
+
+    window.removeEventListener(
+        'pageshow',
+        handleMarqueeVisibilityChange
+    );
+
+    window.removeEventListener(
+        'pagehide',
+        handleMarqueeVisibilityChange
+    );
 
     reducedMotionMediaQuery =
         null;
@@ -1640,7 +1772,7 @@ onUnmounted(() => {
                             border-baige/5
                             bg-green/90
                             p-2
-                            shadow-[var(--shadow-mid)]
+                            shadow-[0_-4px_12px_-6px_rgba(0,0,0,0.3)]
                             [scrollbar-width:none]
                             [&::-webkit-scrollbar]:hidden
 
@@ -1832,7 +1964,7 @@ onUnmounted(() => {
                             aria-label="Mentis"
                             class="
                                 h-auto
-                                w-[clamp(10rem,28vw,18rem)]
+                                w-14
                                 shrink-0
                             "
                             @load="handleLoaderReady"

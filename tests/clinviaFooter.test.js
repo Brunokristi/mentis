@@ -31,8 +31,8 @@ const samplePayload = {
             },
             {
                 id: 2,
-                name: 'Mentis',
-                slug: 'mentis',
+                name: 'Humanitas',
+                slug: 'humanitas',
                 description: 'Ambulancia klinickej a dopravnej psychológie.',
                 address_line_1: 'Hviezdoslavova 8',
                 city: 'Rimavská Sobota',
@@ -106,7 +106,7 @@ test('normalizes the public footer payload with all required visible fields', ()
         'Slovensko'
     ])
 
-    assert.equal(normalized.branch.name, 'Mentis')
+    assert.equal(normalized.branch.name, 'Humanitas')
     assert.equal(normalized.branch.description, 'Ambulancia klinickej a dopravnej psychológie.')
     assert.equal(normalized.branch.email, 'klinickapsychologiars@gmail.com')
     assert.equal(normalized.branch.phone, '+421 948 569 112')
@@ -135,7 +135,7 @@ test('maps alternate company id fields used by Clinvia payloads', () => {
             branches: [
                 {
                     id: 2,
-                    name: 'Mentis'
+                    name: 'Humanitas'
                 }
             ]
         }
@@ -160,7 +160,7 @@ test('maps nested company identifier fields when ids are not top-level', () => {
             branches: [
                 {
                     id: 2,
-                    name: 'Mentis'
+                    name: 'Humanitas'
                 }
             ]
         }
@@ -187,7 +187,7 @@ test('also reads identifiers from common nested company wrappers', () => {
             branches: [
                 {
                     id: 2,
-                    name: 'Mentis'
+                    name: 'Humanitas'
                 }
             ]
         }
