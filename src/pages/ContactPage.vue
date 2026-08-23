@@ -61,11 +61,11 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: 'https://klinickapsychologiars.sk/'
+            url: 'https://klinickapsychologialucenec.sk/'
         },
         {
             name: 'Kontakt',
-            url: 'https://klinickapsychologiars.sk/kontakt'
+            url: 'https://klinickapsychologialucenec.sk/kontakt'
         }
     ]
 });

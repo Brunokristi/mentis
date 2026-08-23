@@ -41,13 +41,13 @@ const samplePayload = {
                 contacts: [
                     {
                         type: 'phone',
-                        value: '+421 948 569 112',
+                        value: '+421 944 094 090',
                         is_primary: true,
                         sort_order: 0
                     },
                     {
                         type: 'email',
-                        value: 'klinickapsychologiars@gmail.com',
+                        value: 'klinickapsychologialc@gmail.com',
                         is_primary: false,
                         sort_order: 0
                     }
@@ -108,8 +108,8 @@ test('normalizes the public footer payload with all required visible fields', ()
 
     assert.equal(normalized.branch.name, 'Humanitas')
     assert.equal(normalized.branch.description, 'Ambulancia klinickej a dopravnej psychológie.')
-    assert.equal(normalized.branch.email, 'klinickapsychologiars@gmail.com')
-    assert.equal(normalized.branch.phone, '+421 948 569 112')
+    assert.equal(normalized.branch.email, 'klinickapsychologialc@gmail.com')
+    assert.equal(normalized.branch.phone, '+421 944 094 090')
     assert.deepEqual(normalized.branch.address.lines, [
         'Hviezdoslavova 8',
         '979 01 Rimavská Sobota',

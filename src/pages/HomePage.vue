@@ -77,7 +77,7 @@ usePageSeo({
     breadcrumbs: [
         {
             name: 'Domov',
-            url: 'https://klinickapsychologiars.sk/'
+            url: 'https://klinickapsychologialucenec.sk/'
         }
     ]
 });
